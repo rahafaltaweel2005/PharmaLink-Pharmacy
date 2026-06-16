@@ -1,5 +1,5 @@
 class ApiConst {
-  static const String baseUrl = "http://192.168.1.101:5279";
+  static const String baseUrl = "http://192.168.1.144:5279";
 
   static const String login = "/api/Auth/login";
   static const String register = "/api/Auth/register";

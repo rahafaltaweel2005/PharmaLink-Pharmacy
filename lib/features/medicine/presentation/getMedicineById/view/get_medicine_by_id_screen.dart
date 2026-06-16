@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:pharma_link/features/cart/presentation/view/cart_screen.dart';
 import '../../../../../core/constant/color_const.dart';
+import '../../../../cart/domain/entity/cart_item_entity.dart';
+import '../../../../cart/presentation/cubit/cart_cubit.dart';
 import '../cubit/get_medicine_by_id_cubit.dart';
 import '../state/get_medicine_by_id_state.dart';
 
@@ -203,7 +206,13 @@ class _GetMedicineByIdScreenState extends State<GetMedicineByIdScreen> {
                         ),
                       ),
 
-                      onPressed: () {},
+                      onPressed: () {
+                        print("add to cart");
+                        context.read<CartCubit>().addToCart(
+                          CartItemEntity(medicine: state.medicine, quantity: 1),
+                        );
+                        Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => CartScreen(),));
+                      },
 
                       child: Text(
                         "Add To Cart",

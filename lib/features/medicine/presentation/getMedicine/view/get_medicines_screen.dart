@@ -14,6 +14,8 @@ class GetMedicinesScreen extends StatefulWidget {
 }
 
 class _GetMedicinesScreenState extends State<GetMedicinesScreen> {
+  // NavigationDestinationLabelBehavior labelBehavior= .alwaysShow;
+  // int currentPageIndex = 0;
   @override
   void initState() {
     super.initState();
@@ -26,18 +28,12 @@ class _GetMedicinesScreenState extends State<GetMedicinesScreen> {
       appBar: AppBar(
         title: const Text(
           "Medicines",
-          style: TextStyle(
-            fontWeight: FontWeight.w700,
-            letterSpacing: 0.5,
-          ),
+          style: TextStyle(fontWeight: FontWeight.w700, letterSpacing: 0.5),
         ),
         actions: [
           IconButton(
             onPressed: () {},
-            icon: const Icon(
-              Icons.search_rounded,
-              size: 26,
-            ),
+            icon: const Icon(Icons.search_rounded, size: 26),
           ),
         ],
       ),
@@ -47,9 +43,7 @@ class _GetMedicinesScreenState extends State<GetMedicinesScreen> {
 
         builder: (context, state) {
           if (state is GetMedicineLoadingState) {
-            return const Center(
-              child: CircularProgressIndicator(),
-            );
+            return const Center(child: CircularProgressIndicator());
           }
 
           if (state is GetMedicineErrorState) {
@@ -91,10 +85,7 @@ class _GetMedicinesScreenState extends State<GetMedicinesScreen> {
             return ListView.builder(
               physics: const BouncingScrollPhysics(),
 
-              padding: const EdgeInsets.symmetric(
-                horizontal: 14,
-                vertical: 10,
-              ),
+              padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
 
               itemCount: medicine.length,
 
@@ -137,9 +128,7 @@ class _GetMedicinesScreenState extends State<GetMedicinesScreen> {
                       child: Padding(
                         padding: const EdgeInsets.all(8),
 
-                        child: PharmaCard(
-                          medicine: state.medicines[index],
-                        ),
+                        child: PharmaCard(medicine: state.medicines[index]),
                       ),
                     ),
                   ),
@@ -163,6 +152,26 @@ class _GetMedicinesScreenState extends State<GetMedicinesScreen> {
           );
         },
       ),
+    //   bottomNavigationBar: NavigationBar(
+    //      labelBehavior: labelBehavior,
+    //     selectedIndex: currentPageIndex,
+    //     onDestinationSelected: (int index) {
+    //        setState(() {
+    //          currentPageIndex = index;
+    //        });
+    //     }
+    //     destinations: const <Widget>[
+    //       NavigationDrawerDestination(icon: IconButton(onPressed: (){
+    //         Navigator.push(context, MaterialPageRoute(builder: (context) => GetMedicinesScreen(),))
+    //       }, icon: icon), label: label),
+    //       NavigationDrawerDestination(icon: IconButton(onPressed: (){
+    //
+    //       }, icon: icon), label: label),
+    //       NavigationDrawerDestination(icon: IconButton(onPressed: (){
+    //
+    // }, icon: icon), label: label)
+    //     ],
+    //   ),
     );
   }
 }

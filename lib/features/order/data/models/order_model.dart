@@ -5,6 +5,7 @@ import 'order_item_model.dart';
 
 class OrderModel {
   int? orderId;
+  String? orderName;
   String? notes;
   String? orderDate;
   String? deliveryTime;

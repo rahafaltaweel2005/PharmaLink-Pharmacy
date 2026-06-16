@@ -1,24 +1,28 @@
 import 'package:pharma_link/core/constant/api_const.dart';
 import 'package:pharma_link/core/network/api_client.dart';
 import 'package:pharma_link/features/order/data/datasource/order_remote_datasource.dart';
-import 'package:pharma_link/features/order/data/models/order_item_model.dart';
 import 'package:pharma_link/features/order/data/models/order_model.dart';
+
+import '../../domain/entity/order_item_entity.dart';
+import '../models/order_item_model.dart';
 
 class OrderRemoteDatasourceImpl extends OrderRemoteDatasource {
   @override
   Future<OrderModel> createOrder({
     String? notes,
-    required List<OrderItemModel> orderItems,
+    required List<OrderItemEntity> orderItems,
   }) async {
     final response = await ApiClient.post(
       endpoint: ApiConst.createOrder,
       data: {
         'notes': notes,
         'orderItems': orderItems
-            .map(
-              (orderItem) =>
-                  orderItem.toJson(),
-            )
+            .map((item) => OrderItemModel(
+                  medicineId: item.medicineId,
+                  medicineName: item.medicineName,
+                  quantity: item.quantity,
+                  unitPrice: item.unitPrice,
+                ))
             .toList(),
       },
     );

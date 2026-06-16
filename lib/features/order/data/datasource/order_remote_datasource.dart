@@ -1,11 +1,11 @@
-import 'package:pharma_link/features/order/data/models/order_item_model.dart';
+import 'package:pharma_link/features/order/domain/entity/order_item_entity.dart';
 
 import '../models/order_model.dart';
 
 abstract class OrderRemoteDatasource {
   Future<OrderModel> createOrder({
     String? notes,
-    required List<OrderItemModel> orderItems,
+    required List<OrderItemEntity> orderItems,
   });
 
   Future<OrderModel> getOrderById({required int orderId});
