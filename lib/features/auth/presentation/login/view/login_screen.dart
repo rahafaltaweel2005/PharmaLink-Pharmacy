@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pharma_link/features/auth/presentation/register/view/register_screen.dart';
 
 import '../../../../../core/constant/color_const.dart';
+import '../../../../inventory/presentation/getPharmacyInventory/view/get_main_inventory_screen.dart';
 import '../../../../medicine/presentation/getMedicine/view/get_medicines_screen.dart';
 import '../cubit/login_cubit.dart';
 import '../state/login_state.dart';
@@ -236,7 +237,14 @@ class _LoginScreenState extends State<LoginScreen> {
                         const SizedBox(height: 28),
 
                         PharmaButton(
-                          onPressed: isLoading ? null : login,
+                          onPressed:(){
+                            Navigator.pushReplacement(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => GetPharmacyInventoryScreen(),
+                              ),
+                            );
+                          },
                           text: "Sign In",
                           buttonIcon: Icons.arrow_forward_ios_rounded,
                         ),

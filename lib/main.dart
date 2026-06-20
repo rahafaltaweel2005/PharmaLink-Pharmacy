@@ -13,6 +13,10 @@ import 'features/auth/domain/usecase/register_use_case.dart';
 import 'features/auth/presentation/login/cubit/login_cubit.dart';
 import 'features/auth/presentation/login/view/login_screen.dart';
 import 'features/auth/presentation/register/cubit/register_cubit.dart';
+import 'features/inventory/data/datasource/inventory_remote_datasource_impl.dart';
+import 'features/inventory/data/repository/inventory_repository_impl.dart';
+import 'features/inventory/domain/usecase/get_pharmacy_inventory_use_case.dart';
+import 'features/inventory/presentation/getPharmacyInventory/cubit/get_pharmacy_inventory_cubit.dart';
 import 'features/medicine/domain/usecase/get_medicine_by_id_use_case.dart';
 import 'features/medicine/domain/usecase/get_medicines_use_case.dart';
 import 'features/medicine/presentation/getMedicine/view/get_medicines_screen.dart';
@@ -48,6 +52,11 @@ void main() {
   final orderRepository = OrderRepositoryImpl(
     orderRemoteDatasource: orderRemoteDatasource,
   );
+  final inventoryRemoteDatasource = InventoryRemoteDatasourceImpl();
+
+  final inventoryRepository = InventoryRepositoryImpl(
+    inventoryRemoteDatasource: inventoryRemoteDatasource,
+  );
   final loginUsecase = LoginUseCase(authRepository: authRepository);
   final registerUsecase = RegisterUseCase(authRepository: authRepository);
   final getMedicinesUsecase = GetMedicinesUseCase(
@@ -62,11 +71,12 @@ void main() {
   final deleteOrderUseCase = DeleteOrderUseCase(
     orderRepository: orderRepository,
   );
-  final getOrdersUseCase = GetOrdersUseCase(
-    orderRepository: orderRepository,
-  );
+  final getOrdersUseCase = GetOrdersUseCase(orderRepository: orderRepository);
   final getOrderByIdUseCase = GetOrderByIdUseCase(
     orderRepository: orderRepository,
+  );
+  final getPharmacyInventoryUseCase = GetPharmacyInventoryUseCase(
+    inventoryRepository: inventoryRepository,
   );
   runApp(
     MultiBlocProvider(
@@ -85,16 +95,24 @@ void main() {
           ),
         ),
         BlocProvider(
-          create: (_) => CreateOrderCubit(createOrderUseCase: createOrderUseCase)
+          create: (_) =>
+              CreateOrderCubit(createOrderUseCase: createOrderUseCase),
         ),
         BlocProvider(
-          create: (_) => CancelOrderCubit(deleteOrderUseCase: deleteOrderUseCase)
+          create: (_) =>
+              CancelOrderCubit(deleteOrderUseCase: deleteOrderUseCase),
         ),
         BlocProvider(
-          create: (_) => GetMyOrderCubit(getOrdersUseCase: getOrdersUseCase)
+          create: (_) => GetMyOrderCubit(getOrdersUseCase: getOrdersUseCase),
         ),
         BlocProvider(
-          create: (_) => GetOrderByIdCubit(getOrderByIdUseCase: getOrderByIdUseCase)
+          create: (_) =>
+              GetOrderByIdCubit(getOrderByIdUseCase: getOrderByIdUseCase),
+        ),
+        BlocProvider(
+          create: (_) => GetPharmacyInventoryCubit(
+            getMainInventoryUseCase: getPharmacyInventoryUseCase,
+          ),
         ),
         BlocProvider(create: (_) => CartCubit()),
       ],
@@ -113,7 +131,7 @@ class MyApp extends StatelessWidget {
       theme: AppTheme.lightTheme,
       darkTheme: AppTheme.darkTheme,
       themeMode: ThemeMode.system,
-      home: GetMyOrderScreen(),
+      home: LoginScreen(),
     );
   }
 }
