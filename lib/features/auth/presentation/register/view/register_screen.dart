@@ -146,7 +146,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
 
               Row(
                 children: List.generate(
-                  3,
+                  2,
 
                   (index) => Expanded(
                     child: Container(
@@ -178,10 +178,13 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     }
 
                     if (state is RegisterSuccessState) {
-                      controller.nextPage(
-                        duration: const Duration(milliseconds: 350),
-                        curve: Curves.easeInOut,
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const LoginScreen(),
+                        ),
                       );
+
                     }
                   },
 
@@ -287,6 +290,75 @@ class _RegisterScreenState extends State<RegisterScreen> {
                               ],
                             ),
                           ),
+                        ),SingleChildScrollView(
+                          child: _buildCard(
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+
+                              children: [
+                                const SizedBox(height: 28),
+
+                                PharmaTextField(
+                                  controller: doctorNameController,
+                                  title: "doctor Name",
+                                  hint: "Dr.Kamal",
+                                  prefixIcon: Icons.person_outline,
+                                  obscureText: false,
+                                ),
+
+                                const SizedBox(height: 20),
+
+                                PharmaTextField(
+                                  controller: locationController,
+                                  title: "Address",
+                                  hint: "Amman",
+                                  prefixIcon: Icons.location_on_outlined,
+                                  obscureText: false,
+                                ),
+
+                                const SizedBox(height: 20),
+
+                                PharmaTextField(
+                                  controller: licenseNumberController,
+                                  title: 'License Number',
+                                  hint: '........',
+                                  prefixIcon: Icons.document_scanner_outlined,
+                                  obscureText: false,
+                                ),
+
+
+                                const SizedBox(height: 35),
+                                currentPage ==2?
+                                PharmaButton(
+                                  text: "Next Step",
+
+                                  onPressed: () {
+                                    controller.nextPage(
+                                      duration: const Duration(
+                                        milliseconds: 350,
+                                      ),
+                                      curve: Curves.easeInOut,
+                                    );
+                                  },
+                                )
+                               : PharmaButton(
+                                  onPressed: (){
+                                    context.read<RegisterCubit>().register(
+                                      name: nameController.text.trim(),
+                                      email: emailController.text.trim(),
+                                      password: passwordController.text,
+                                      phoneNumber: phoneNumberController.text.trim(),
+                                      doctorName: doctorNameController.text.trim(),
+                                      location: locationController.text.trim(),
+                                      licenseNumber: licenseNumberController.text.trim(),
+                                    );
+                                  },
+                                  text: "Create Account",
+                                  buttonIcon: Icons.arrow_forward_ios_rounded,
+                                ),
+                              ],
+                            ),
+                          ),
                         ),
                       ],
                     );
@@ -309,7 +381,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
         border: Border.all(color: const Color(0xFFE8DDD7)),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.03),
+            color: Colors.black.withValues(alpha: 0.03),
             blurRadius: 25,
             offset: const Offset(0, 10),
           ),
