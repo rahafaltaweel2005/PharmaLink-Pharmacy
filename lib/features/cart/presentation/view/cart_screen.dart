@@ -25,18 +25,7 @@ class _CartScreenState extends State<CartScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text(
-          "Cart",
-          style: TextStyle(fontWeight: FontWeight.w700, letterSpacing: 0.5),
-        ),
-        actions: [
-          IconButton(
-            onPressed: () {
-              context.read<CartCubit>().clearCart();
-            },
-            icon: Icon(Icons.delete_outline),
-          ),
-        ],
+
       ),
       body: BlocBuilder<CartCubit, CartState>(
         builder: (context, state) {
@@ -81,6 +70,22 @@ class _CartScreenState extends State<CartScreen> {
             return SingleChildScrollView(
               child: Column(
                 children: [
+                  Row(
+                    children: [
+                      const SizedBox(width: 14),
+                      const Text(
+                        "Cart",
+
+                        style: TextStyle(
+                          height: 1.1,
+                          fontSize: 40,
+                          fontWeight: FontWeight.bold,
+                          color: ColorConst.primary,
+                          fontFamily: 'Newsreader',
+                        ),
+                      ),
+                    ],
+                  ),
                   ListView.builder(
                     shrinkWrap: true,
                     physics: NeverScrollableScrollPhysics(),
@@ -240,12 +245,44 @@ class _CartScreenState extends State<CartScreen> {
                       ),
 
                       onPressed: () {
+                        if(state.items.isNotEmpty){
                         Navigator.push(
                           context,
                           MaterialPageRoute(
                             builder: (context) => CreateOrderScreen(),
                           ),
-                        );
+                        );}
+                        else{
+                          showDialog(
+                            context: context,
+                            builder: (_) => AlertDialog(
+                              title: Text("NO Items in cart"),
+                              content: Text("Please add items to cart"),
+                              actions: [
+                                ElevatedButton(
+                                  style: ElevatedButton.styleFrom(
+                                    backgroundColor: ColorConst.primary,
+                                    elevation: 0,
+                                    padding: const EdgeInsets.symmetric(vertical: 20),
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(28),
+                                    ),
+                                  ),
+                                  onPressed: () {
+                                    Navigator.pop(context);
+                                  },
+                                  child: Text(
+                                    "Ok",
+                                    style: TextStyle(
+                                      fontSize: 18,
+                                      fontWeight: FontWeight.w700,
+                                      color: Colors.white,
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          );                        }
                       },
 
                       child: Text(

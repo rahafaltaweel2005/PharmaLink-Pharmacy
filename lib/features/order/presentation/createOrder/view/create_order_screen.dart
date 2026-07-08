@@ -1,7 +1,7 @@
-import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:pharma_link/features/medicine/presentation/getMedicine/view/get_medicines_screen.dart';
+import 'package:pharma_link/features/home/presentation/view/home_screen.dart';
 import 'package:pharma_link/features/order/presentation/createOrder/cubit/create_order_cubit.dart';
 
 import '../../../../../core/constant/color_const.dart';
@@ -17,13 +17,13 @@ class CreateOrderScreen extends StatefulWidget {
 }
 
 class _CreateOrderScreenState extends State<CreateOrderScreen> {
-  final TextEditingController noteController = TextEditingController();
+  final TextEditingController locationController = TextEditingController();
 
   int selectedDeliveryOption = 0;
 
   @override
   void dispose() {
-    noteController.dispose();
+    locationController.dispose();
     super.dispose();
   }
 
@@ -74,7 +74,7 @@ class _CreateOrderScreenState extends State<CreateOrderScreen> {
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) => GetMedicinesScreen()),
+                                  builder: (context) =>HomeScreen()),
                             );
                             cartCubit.clearCart();
                           },
@@ -309,9 +309,9 @@ class _CreateOrderScreenState extends State<CreateOrderScreen> {
                     ),
                   ),
                   PharmaTextField(
-                    controller: noteController,
-                    title: "Note",
-                    hint: "Enter your Note here",
+                    controller: locationController,
+                    title: "Location",
+                    hint: "Enter your location here",
                     prefixIcon: Icons.location_on_outlined,
                   ),
                 ],
@@ -369,7 +369,7 @@ class _CreateOrderScreenState extends State<CreateOrderScreen> {
                   orderItems: cartItems
                       .map((item) => item.toOrderItemEntity())
                       .toList(),
-                  notes: noteController.text,
+                  notes: locationController.text,
                 );
               },
               child: Text(

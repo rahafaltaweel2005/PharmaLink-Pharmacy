@@ -1,10 +1,12 @@
 class ApiConst {
-  static const String baseUrl = "http://192.168.1.144:5279";
+  static const String baseUrl = "http://192.168.1.28:5279";
 
   static const String login = "/api/Auth/login";
   static const String register = "/api/Auth/register";
   static const String refreshToken = "/api/Auth/refresh-token";
   static const String logout = "/api/Auth/logout";
+  static const String profile = "/api/Auth/profile";
+
 
   static const String medicine = "/api/Medicine";
   static String medicineById(int id) => "/api/Medicine/$id";

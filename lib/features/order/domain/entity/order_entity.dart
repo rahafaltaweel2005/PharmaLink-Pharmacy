@@ -8,6 +8,7 @@ class OrderEntity {
   final DateTime orderDate;
   final DateTime? deliveryTime;
   final String? notes;
+  final String? supplierName;
   final int supplierId;
   final double totalPrice;
   final StatusOrder status;
@@ -22,5 +23,6 @@ class OrderEntity {
     required this.totalPrice,
     required this.status,
    required this.orderItems,
+    this.supplierName,
   });
 }

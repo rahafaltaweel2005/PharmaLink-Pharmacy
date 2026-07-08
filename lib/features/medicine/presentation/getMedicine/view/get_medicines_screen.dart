@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
+import '../../../../auth/presentation/login/widget/pharma_text_field.dart';
+import '../../../domain/entity/medicine_entity.dart';
 import '../../getMedicineById/view/get_medicine_by_id_screen.dart';
 import '../cubit/get_medicine_cubit.dart';
 import '../state/get_medicine_state.dart';
@@ -14,8 +15,19 @@ class GetMedicinesScreen extends StatefulWidget {
 }
 
 class _GetMedicinesScreenState extends State<GetMedicinesScreen> {
-  // NavigationDestinationLabelBehavior labelBehavior= .alwaysShow;
-  // int currentPageIndex = 0;
+  int currentIndex = 0;
+  TextEditingController searchController = TextEditingController();
+  List<MedicineEntity> allMedicine = [];
+  List<MedicineEntity> filteredMedicine = [];
+
+  void search(String searchController) {
+    setState(() {
+      filteredMedicine = allMedicine.where((medicine) {
+        return medicine.name.toLowerCase().contains(searchController.toLowerCase());
+      }).toList();
+    });
+  }
+
   @override
   void initState() {
     super.initState();
@@ -25,20 +37,10 @@ class _GetMedicinesScreenState extends State<GetMedicinesScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text(
-          "Medicines",
-          style: TextStyle(fontWeight: FontWeight.w700, letterSpacing: 0.5),
-        ),
-        actions: [
-          IconButton(
-            onPressed: () {},
-            icon: const Icon(Icons.search_rounded, size: 26),
-          ),
-        ],
-      ),
 
-      body: BlocConsumer<GetMedicineCubit, GetMedicineState>(
+
+      body:
+      BlocConsumer<GetMedicineCubit, GetMedicineState>(
         listener: (context, state) {},
 
         builder: (context, state) {
@@ -66,6 +68,10 @@ class _GetMedicinesScreenState extends State<GetMedicinesScreen> {
           }
 
           if (state is GetMedicineLoadedState) {
+            if (allMedicine.isEmpty) {
+              allMedicine = state.medicines;
+              filteredMedicine = state.medicines;
+            }
             final medicine = state.medicines;
 
             if (medicine.isEmpty) {
@@ -82,58 +88,73 @@ class _GetMedicinesScreenState extends State<GetMedicinesScreen> {
               );
             }
 
-            return ListView.builder(
-              physics: const BouncingScrollPhysics(),
+            return Column(
+              children: [
+                PharmaTextField(
+                  controller: searchController,
+                  hint: "Medicine Name",
+                  prefixIcon: Icons.search_outlined,
+                  obscureText: false,
+                  onChange: (value) {
+                    search(value ?? "");
+                  },
+                ),
+                Expanded(
+                  child: ListView.builder(
+                    physics: const BouncingScrollPhysics(),
 
-              padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
+                    padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
 
-              itemCount: medicine.length,
+                    itemCount: filteredMedicine.length,
 
-              itemBuilder: (context, index) {
-                return Container(
-                  margin: const EdgeInsets.only(bottom: 14),
+                    itemBuilder: (context, index) {
+                      return Container(
+                        margin: const EdgeInsets.only(bottom: 14),
 
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(30),
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(30),
 
-                    boxShadow: [
-                      BoxShadow(
-                        color: Colors.black.withValues(alpha: 0.04),
-                        blurRadius: 20,
-                        offset: const Offset(0, 10),
-                      ),
-                    ],
-                  ),
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.black.withValues(alpha: 0.04),
+                              blurRadius: 20,
+                              offset: const Offset(0, 10),
+                            ),
+                          ],
+                        ),
 
-                  child: Material(
-                    color: Theme.of(context).colorScheme.surface,
+                        child: Material(
+                          color: Theme.of(context).colorScheme.surface,
 
-                    borderRadius: BorderRadius.circular(30),
+                          borderRadius: BorderRadius.circular(30),
 
-                    child: InkWell(
-                      borderRadius: BorderRadius.circular(30),
+                          child: InkWell(
+                            borderRadius: BorderRadius.circular(30),
 
-                      onTap: () {
-                        Navigator.push(
-                          context,
+                            onTap: () {
+                              Navigator.push(
+                                context,
 
-                          MaterialPageRoute(
-                            builder: (context) => GetMedicineByIdScreen(
-                              id: state.medicines[index].id,
+                                MaterialPageRoute(
+                                  builder: (context) => GetMedicineByIdScreen(
+                                    id: filteredMedicine[index].id,
+                                  ),
+                                ),
+                              );
+                            },
+
+                            child: Padding(
+                              padding: const EdgeInsets.all(8),
+
+                              child: PharmaCard(medicine: filteredMedicine[index]),
                             ),
                           ),
-                        );
-                      },
-
-                      child: Padding(
-                        padding: const EdgeInsets.all(8),
-
-                        child: PharmaCard(medicine: state.medicines[index]),
-                      ),
-                    ),
+                        ),
+                      );
+                    },
                   ),
-                );
-              },
+                ),
+              ],
             );
           }
 
@@ -151,27 +172,7 @@ class _GetMedicinesScreenState extends State<GetMedicinesScreen> {
             ),
           );
         },
-      ),
-    //   bottomNavigationBar: NavigationBar(
-    //      labelBehavior: labelBehavior,
-    //     selectedIndex: currentPageIndex,
-    //     onDestinationSelected: (int index) {
-    //        setState(() {
-    //          currentPageIndex = index;
-    //        });
-    //     }
-    //     destinations: const <Widget>[
-    //       NavigationDrawerDestination(icon: IconButton(onPressed: (){
-    //         Navigator.push(context, MaterialPageRoute(builder: (context) => GetMedicinesScreen(),))
-    //       }, icon: icon), label: label),
-    //       NavigationDrawerDestination(icon: IconButton(onPressed: (){
-    //
-    //       }, icon: icon), label: label),
-    //       NavigationDrawerDestination(icon: IconButton(onPressed: (){
-    //
-    // }, icon: icon), label: label)
-    //     ],
-    //   ),
+      )
     );
   }
 }

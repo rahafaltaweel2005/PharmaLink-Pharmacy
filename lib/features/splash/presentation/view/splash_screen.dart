@@ -6,10 +6,12 @@ import 'package:flutter/material.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:pharma_link/core/constant/app_const.dart';
 import 'package:pharma_link/core/storage/secure_storage_helper.dart';
+import 'package:pharma_link/features/medicine/presentation/getMedicine/view/get_medicines_screen.dart';
 
 import '../../../../core/constant/color_const.dart';
 import '../../../../core/constant/svg_const.dart';
 import '../../../auth/presentation/login/view/login_screen.dart';
+import '../../../home/presentation/view/home_screen.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -20,24 +22,20 @@ class SplashScreen extends StatefulWidget {
 
 class _SplashScreenState extends State<SplashScreen>
     with TickerProviderStateMixin {
-
   Future<void> checkLogin() async {
     await Future.delayed(Duration(seconds: 4));
-    final token = await SecureStorageHelper.read(key: AppConst.accessTokenKey);
-    if (!mounted) return;
-    if (token == null || token.isEmpty) {
-      Navigator.of(context).pushReplacement(
-        MaterialPageRoute(builder: (context) => LoginScreen()),
-      );
-      return;
-      Navigator.of(context).pushReplacement(
-        MaterialPageRoute(
-          builder: (_) => LoginScreen(),
-        ),
-      );
-    }
+    // final token = await SecureStorageHelper.read(key: AppConst.accessTokenKey);
+    // if (!mounted) return;
+    // if (token == null || token.isEmpty) {
+      Navigator.of(
+        context,
+      ).pushReplacement(MaterialPageRoute(builder: (context) => LoginScreen()));
+    // } else {
+    //   Navigator.of(context).pushReplacement(
+    //     MaterialPageRoute(builder: (context) => HomeScreen()),
+    //   );
+    // }
   }
-
 
   @override
   void initState() {
@@ -45,11 +43,9 @@ class _SplashScreenState extends State<SplashScreen>
     checkLogin();
   }
 
-
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    final isDarkMode = theme.brightness == Brightness.dark;
     return Scaffold(
       backgroundColor: theme.scaffoldBackgroundColor,
 
@@ -63,7 +59,6 @@ class _SplashScreenState extends State<SplashScreen>
               crossAxisAlignment: CrossAxisAlignment.center,
 
               children: [
-
                 const Spacer(flex: 2),
 
                 Container(
@@ -77,10 +72,7 @@ class _SplashScreenState extends State<SplashScreen>
 
                     color: Colors.white,
 
-                    border: Border.all(
-                      width: 1.5,
-                      color: ColorConst.border,
-                    ),
+                    border: Border.all(width: 1.5, color: ColorConst.border),
 
                     boxShadow: [
                       BoxShadow(
@@ -93,7 +85,6 @@ class _SplashScreenState extends State<SplashScreen>
 
                   child: SvgPicture.asset(
                     SvgConst.pharmaLinkLogo,
-                    fit: BoxFit.contain,
                   ),
                 ),
 

@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:pharma_link/features/order/domain/entity/order_entity.dart';
 import 'package:pharma_link/features/order/presentation/createOrder/view/create_order_screen.dart';
 import 'package:pharma_link/features/order/presentation/getMyOrder/cubit/get_my_order_cubit.dart';
 import 'package:pharma_link/features/order/presentation/getMyOrder/state/get_my_order_state.dart';
 
+import '../../../../auth/presentation/login/widget/pharma_text_field.dart';
 import '../../getOrderById/view/get_order_by_id_screen.dart';
 import '../widget/pharma_card.dart';
-
 
 class GetMyOrderScreen extends StatefulWidget {
   const GetMyOrderScreen({super.key});
@@ -16,33 +17,36 @@ class GetMyOrderScreen extends StatefulWidget {
 }
 
 class _GetMyOrderScreenState extends State<GetMyOrderScreen> {
+  TextEditingController searchController = TextEditingController();
+  List<OrderEntity> allOrders = [];
+  List<OrderEntity> filteredOrders = [];
+
   @override
   void initState() {
     super.initState();
     context.read<GetMyOrderCubit>().getOrders();
   }
 
+  void search(String searchController) {
+    setState(() {
+      filteredOrders = allOrders.where((order) {
+        return order.orderId.toString().contains(
+          searchController.toLowerCase(),
+        );
+      }).toList();
+    });
+  }
+
+  @override
+  void dispose() {
+    searchController.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text(
-          "My Orders",
-          style: TextStyle(fontWeight: FontWeight.w700, letterSpacing: 0.5),
-        ),
-        actions: [
-          IconButton(
-            onPressed: () {
-
-            },
-            icon: const Icon(Icons.search_rounded, size: 26),
-          ),
-        ],
-      ),
-
-      body: BlocConsumer<GetMyOrderCubit, GetMyOrderState>(
-        listener: (context, state) {},
-
+      body: BlocBuilder<GetMyOrderCubit, GetMyOrderState>(
         builder: (context, state) {
           if (state is GetMyOrderLoadingState) {
             return const Center(child: CircularProgressIndicator());
@@ -68,6 +72,10 @@ class _GetMyOrderScreenState extends State<GetMyOrderScreen> {
           }
 
           if (state is GetMyOrderLoadedState) {
+            if (allOrders.isEmpty) {
+              allOrders = state.orders;
+              filteredOrders = state.orders;
+            }
             final orders = state.orders;
 
             if (orders.isEmpty) {
@@ -84,62 +92,73 @@ class _GetMyOrderScreenState extends State<GetMyOrderScreen> {
               );
             }
 
-            return Stack(
+            return Column(
               children: [
-                ListView.builder(
-                  physics: const BouncingScrollPhysics(),
+                PharmaTextField(
+                  controller: searchController,
+                  hint: "Order ID",
+                  prefixIcon: Icons.search_outlined,
+                  obscureText: false,
+                  onChange: (value) {
+                    search(value ?? "");
+                  },
+                ),
 
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 14,
-                    vertical: 10,
-                  ),
+                Expanded(
+                  child: ListView.builder(
+                    physics: const BouncingScrollPhysics(),
 
-                  itemCount: orders.length,
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 14,
+                      vertical: 10,
+                    ),
 
-                  itemBuilder: (context, index) {
-                    return Container(
-                      margin: const EdgeInsets.only(bottom: 14),
+                    itemCount: filteredOrders.length,
 
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(30),
+                    itemBuilder: (context, index) {
+                      return Container(
+                        margin: const EdgeInsets.only(bottom: 14),
 
-                        boxShadow: [
-                          BoxShadow(
-                            color: Colors.black.withValues(alpha: 0.04),
-                            blurRadius: 20,
-                            offset: const Offset(0, 10),
-                          ),
-                        ],
-                      ),
-
-                      child: Material(
-                        color: Theme.of(context).colorScheme.surface,
-
-                        borderRadius: BorderRadius.circular(30),
-
-                        child: InkWell(
+                        decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(30),
 
-                          onTap: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => GetOrderByIdScreen(
-                                  id: state.orders[index].orderId,
-                                ),
-                              ),
-                            );
-                            context.read<GetMyOrderCubit>().getOrders();
-                          },
-                          child: Padding(
-                            padding: const EdgeInsets.all(8),
-                            child: PharmaCard(order: state.orders[index]),
-                          ),
-
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.black.withValues(alpha: 0.04),
+                              blurRadius: 20,
+                              offset: const Offset(0, 10),
+                            ),
+                          ],
                         ),
-                      ),
-                    );
-                  },
+
+                        child: Material(
+                          color: Theme.of(context).colorScheme.surface,
+
+                          borderRadius: BorderRadius.circular(30),
+
+                          child: InkWell(
+                            borderRadius: BorderRadius.circular(30),
+
+                            onTap: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => GetOrderByIdScreen(
+                                    id: filteredOrders[index].orderId,
+                                  ),
+                                ),
+                              );
+                              context.read<GetMyOrderCubit>().getOrders();
+                            },
+                            child: Padding(
+                              padding: const EdgeInsets.all(8),
+                              child: PharmaCard(order: filteredOrders[index]),
+                            ),
+                          ),
+                        ),
+                      );
+                    },
+                  ),
                 ),
               ],
             );

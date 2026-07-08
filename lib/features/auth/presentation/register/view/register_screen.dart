@@ -290,7 +290,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
                               ],
                             ),
                           ),
-                        ),SingleChildScrollView(
+                        ),
+                        SingleChildScrollView(
                           child: _buildCard(
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
@@ -376,7 +377,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
       width: double.infinity,
       padding: const EdgeInsets.symmetric(horizontal: 22, vertical: 28),
       decoration: BoxDecoration(
-        color: const Color(0xFFFFF9F4),
+        color: Colors.white,
         borderRadius: BorderRadius.circular(38),
         border: Border.all(color: const Color(0xFFE8DDD7)),
         boxShadow: [

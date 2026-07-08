@@ -16,9 +16,6 @@ class PharmaCard extends StatelessWidget {
     final isNetworkImage =
         imagePath.startsWith('http://') || imagePath.startsWith('https://');
     final isLocalImage = imagePath.startsWith('/');
-    print("imagePath = ${medicine.imageUrl}");
-    print("isLocalImage = $isLocalImage");
-    print("isNetworkImage = $isNetworkImage");
     return Container(
       padding: const EdgeInsets.all(12),
 
@@ -41,68 +38,64 @@ class PharmaCard extends StatelessWidget {
       child: Row(
         mainAxisSize: MainAxisSize.min,
         children: [
+
           isLocalImage
               ? ClipRRect(
-                  borderRadius: BorderRadius.circular(28),
-                  child: File(imagePath).existsSync()
-                      ? Image.file(
-                          File(imagePath),
-                          width: 82,
-                          height: 82,
-                          fit: BoxFit.cover,
-                        )
-                      : Container(
-                          height: 82,
-                          width: 82,
-                          decoration: const BoxDecoration(
-                            shape: BoxShape.circle,
-                            color: Color(0xFFF5F5F5),
-                          ),
-                          child: const Icon(
-                            Icons.image_outlined,
-                            color: Colors.grey,
-                            size: 30,
-                          ),
-                        ),
-                )
+            borderRadius: BorderRadius.circular(24),
+
+            child: Image.file(
+              File(imagePath),
+              width: 92,
+              height: 92,
+              fit: BoxFit.cover,
+
+            ),
+          )
               : isNetworkImage
               ? ClipRRect(
-                  borderRadius: BorderRadius.circular(28),
-                  child: Image.network(
-                    medicine.imageUrl,
-                    width: 82,
-                    height: 82,
-                    fit: BoxFit.cover,
-                    errorBuilder: (_, __, ___) {
-                      return Container(
-                        height: 82,
-                        width: 82,
-                        decoration: const BoxDecoration(
-                          shape: BoxShape.circle,
-                          color: Color(0xFFF5F5F5),
-                        ),
-                        child: const Icon(
-                          Icons.image_outlined,
-                          color: Colors.grey,
-                          size: 30,
-                        ),
-                      );
-                    },
-                  ),
-                )
-              : Container(
-                  height: 82,
-                  width: 82,
-                  decoration: const BoxDecoration(
-                    shape: BoxShape.circle,
-                    color: Color(0xFFF5F5F5),
+            borderRadius: BorderRadius.circular(24),
+
+            child: Image.network(
+              imagePath,
+              width: 92,
+              height: 92,
+              fit: BoxFit.cover,
+              headers: const {
+                'ngrok-skip-browser-warning': 'true',
+              },
+              errorBuilder: (context, error, stackTrace) {
+                return Container(
+                  height: 92,
+                  width: 92,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(24),
+                    color: const Color(0xFFF3F4F6),
                   ),
                   child: const Icon(
-                    Icons.image_outlined,
-                    color: Colors.grey,
-                    size: 30,
+                    Icons.broken_image_outlined,
+                    color: Color(0xFF9CA3AF),
+                    size: 34,
                   ),
-                ),
+                );
+              },
+            ),
+          )
+              : Container(
+            height: 92,
+            width: 92,
+
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(24),
+              color: const Color(0xFFF3F4F6),
+            ),
+
+            child: const Icon(
+              Icons.image_outlined,
+              color: Color(0xFF9CA3AF),
+              size: 34,
+            ),
+          ),
+
           const SizedBox(width: 14),
 
           Expanded(

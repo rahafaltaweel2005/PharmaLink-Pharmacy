@@ -1,12 +1,12 @@
-
-
 import '../entity/auth_response_entity.dart';
+import '../entity/profile_entity.dart';
 
 abstract class AuthRepository {
   Future<AuthResponseEntity> login({
     required String email,
     required String password,
   });
+
   Future<AuthResponseEntity> register({
     required String name,
     required String email,
@@ -16,5 +16,8 @@ abstract class AuthRepository {
     required String location,
     required String licenseNumber,
   });
+
+  Future<ProfileEntity> profile();
+
   Future<void> logout();
 }

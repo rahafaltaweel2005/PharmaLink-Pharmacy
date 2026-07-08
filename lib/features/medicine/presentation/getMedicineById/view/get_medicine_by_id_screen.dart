@@ -25,47 +25,50 @@ class _GetMedicineByIdScreenState extends State<GetMedicineByIdScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Theme.of(context).scaffoldBackgroundColor,
-        surfaceTintColor: Colors.transparent,
-        scrolledUnderElevation: 0,
+    return BlocBuilder<GetMedicineByIdCubit, GetMedicineByIdState>(
+      builder: (context, state) {
+        if (state is GetMedicineByIdLoadingState) {
+          return const Center(child: CircularProgressIndicator());
+        }
 
-        title: const Text(
-          "Medicine Details",
-          style: TextStyle(fontWeight: FontWeight.w700, letterSpacing: 0.4),
-        ),
-      ),
-
-      body: BlocBuilder<GetMedicineByIdCubit, GetMedicineByIdState>(
-        builder: (context, state) {
-          if (state is GetMedicineByIdLoadingState) {
-            return const Center(child: CircularProgressIndicator());
-          }
-
-          if (state is GetMedicineByIdErrorState) {
-            return Center(
-              child: Padding(
-                padding: const EdgeInsets.all(16),
-                child: Text(
-                  state.error,
-                  textAlign: TextAlign.center,
-                  style: const TextStyle(
-                    fontSize: 16,
-                    fontWeight: FontWeight.w500,
-                  ),
+        if (state is GetMedicineByIdErrorState) {
+          return Center(
+            child: Padding(
+              padding: const EdgeInsets.all(16),
+              child: Text(
+                state.error,
+                textAlign: TextAlign.center,
+                style: const TextStyle(
+                  fontSize: 16,
+                  fontWeight: FontWeight.w500,
                 ),
               ),
-            );
-          }
+            ),
+          );
+        }
 
-          if (state is GetMedicineByIdLoadedState) {
-            return SingleChildScrollView(
+        if (state is GetMedicineByIdLoadedState) {
+          return Scaffold(
+            appBar: AppBar(
+              backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+              surfaceTintColor: Colors.transparent,
+              scrolledUnderElevation: 0,
+
+              title: Text(
+                state.medicine.name,
+                style: TextStyle(
+                  fontWeight: FontWeight.w700,
+                  letterSpacing: 0.4,
+                ),
+              ),
+            ),
+
+            body: SingleChildScrollView(
               padding: const EdgeInsets.all(18),
 
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
-
+                mainAxisAlignment: MainAxisAlignment.start,
                 children: [
                   Container(
                     decoration: BoxDecoration(
@@ -85,52 +88,14 @@ class _GetMedicineByIdScreenState extends State<GetMedicineByIdScreen> {
 
                       child: Image.network(
                         state.medicine.imageUrl,
-                        height: 300,
+                        height: 200,
                         width: double.infinity,
                         fit: BoxFit.cover,
                       ),
                     ),
                   ),
 
-                  const SizedBox(height: 24),
-
-                  Container(
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: 14,
-                      vertical: 7,
-                    ),
-
-                    decoration: BoxDecoration(
-                      color: Theme.of(context).scaffoldBackgroundColor,
-                      borderRadius: BorderRadius.circular(30),
-                    ),
-
-                    child: Text(
-                      state.medicine.type.name,
-
-                      style: const TextStyle(
-                        fontSize: 11,
-                        fontWeight: FontWeight.w700,
-                        color: ColorConst.primary,
-                        letterSpacing: 0.6,
-                      ),
-                    ),
-                  ),
-
                   const SizedBox(height: 16),
-
-                  Text(
-                    state.medicine.name,
-
-                    style: TextStyle(
-                      fontSize: 34,
-                      fontWeight: FontWeight.w700,
-                      color: Theme.of(context).colorScheme.onSurface,
-                      height: 1.1,
-                    ),
-                  ),
-
-                  const SizedBox(height: 20),
 
                   Container(
                     padding: const EdgeInsets.symmetric(
@@ -153,16 +118,25 @@ class _GetMedicineByIdScreenState extends State<GetMedicineByIdScreen> {
                       ),
                     ),
                   ),
+                  const SizedBox(height: 10),
+                  Container(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 12,
+                      vertical: 6,
+                    ),
+                    decoration: BoxDecoration(
+                      color: const Color(0xFFF1D9D3),
+                      borderRadius: BorderRadius.circular(30),
+                    ),
+                    child: Text(
+                      state.medicine.type.name,
 
-                  const SizedBox(height: 30),
-
-                  const Text(
-                    "PRODUCT DESCRIPTION",
-                    style: TextStyle(
-                      fontSize: 13,
-                      letterSpacing: 1.2,
-                      fontWeight: FontWeight.w700,
-                      color: ColorConst.neutral,
+                      style: const TextStyle(
+                        fontSize: 11,
+                        fontWeight: FontWeight.w700,
+                        color: ColorConst.primary,
+                        letterSpacing: 0.6,
+                      ),
                     ),
                   ),
 
@@ -183,8 +157,8 @@ class _GetMedicineByIdScreenState extends State<GetMedicineByIdScreen> {
                       state.medicine.description ?? "",
 
                       style: TextStyle(
-                        height: 1.7,
-                        fontSize: 15,
+                        height: 1.5,
+                        fontSize: 19,
                         fontWeight: FontWeight.w500,
                         color: Theme.of(context).textTheme.bodyMedium?.color,
                       ),
@@ -211,7 +185,10 @@ class _GetMedicineByIdScreenState extends State<GetMedicineByIdScreen> {
                         context.read<CartCubit>().addToCart(
                           CartItemEntity(medicine: state.medicine, quantity: 1),
                         );
-                        Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => CartScreen(),));
+                        Navigator.pushReplacement(
+                          context,
+                          MaterialPageRoute(builder: (context) => CartScreen()),
+                        );
                       },
 
                       child: Text(
@@ -227,17 +204,17 @@ class _GetMedicineByIdScreenState extends State<GetMedicineByIdScreen> {
                   ),
                 ],
               ),
-            );
-          }
-
-          return const Center(
-            child: Text(
-              "Something wrong",
-              style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
             ),
           );
-        },
-      ),
+        }
+
+        return const Center(
+          child: Text(
+            "Something wrong",
+            style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
+          ),
+        );
+      },
     );
   }
 }

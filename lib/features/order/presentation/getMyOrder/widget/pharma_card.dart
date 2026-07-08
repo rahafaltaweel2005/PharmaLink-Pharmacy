@@ -224,14 +224,11 @@ class PharmaCard extends StatelessWidget {
                     ),
                   ],
                 ),
-
-                const SizedBox(height: 14),
-
                 Row(
                   children: [
 
                     Text(
-                     'Supplier Id: ',
+                     'Supplier Name: ',
 
                       style: const TextStyle(
                         fontSize: 15,
@@ -239,7 +236,7 @@ class PharmaCard extends StatelessWidget {
                         color: ColorConst.neutral,
                       ),
                     ),Text(
-                      order.supplierId.toString(),
+                      order.supplierName ?? '',
 
                       style: const TextStyle(
                         fontSize: 15,

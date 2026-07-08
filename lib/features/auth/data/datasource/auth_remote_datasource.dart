@@ -1,4 +1,7 @@
 import 'package:pharma_link/features/auth/data/models/auth_response_model.dart';
+
+import '../models/profile_model.dart';
+
 abstract class AuthRemoteDatasource {
   Future<AuthResponseModel> login({
     required String email,
@@ -14,6 +17,8 @@ abstract class AuthRemoteDatasource {
     required String location,
     required String licenseNumber,
   });
+
+  Future<ProfileModel> profile();
 
   Future<void> logout();
 }

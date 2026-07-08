@@ -332,7 +332,7 @@ class _GetOrderByIdScreenState extends State<GetOrderByIdScreen> {
                               ),
                               SizedBox(width: 10),
                               Text(
-                                state.order.supplierId.toString(),
+                                state.order.supplierName ?? '',
                                 style: TextStyle(
                                   fontSize: 18,
                                   fontWeight: FontWeight.w800,

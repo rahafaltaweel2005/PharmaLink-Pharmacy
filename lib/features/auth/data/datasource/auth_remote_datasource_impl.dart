@@ -1,8 +1,10 @@
 
 import '../../../../core/constant/api_const.dart';
+import '../../../../core/constant/app_const.dart';
 import '../../../../core/network/api_client.dart';
 import '../../../../core/storage/secure_storage_helper.dart';
 import 'package:pharma_link/features/auth/data/models/auth_response_model.dart';
+import '../models/profile_model.dart';
 import 'auth_remote_datasource.dart';
 
 class AuthRemoteDatasourceImpl extends AuthRemoteDatasource {
@@ -44,8 +46,21 @@ class AuthRemoteDatasourceImpl extends AuthRemoteDatasource {
   }
 
   @override
-  Future<void> logout() async{
-       await ApiClient.post(endpoint: ApiConst.logout);
-       await SecureStorageHelper.deleteAll();
+  Future<ProfileModel> profile() async {
+    final response = await ApiClient.get(endpoint: ApiConst.profile);
+    return ProfileModel.fromJson(response.data);
+  }
+
+  @override
+  Future<void> logout() async {
+    final refreshToken = await SecureStorageHelper.read(
+      key: AppConst.refreshTokenKey,
+    );
+    print("refreshToken logout ${refreshToken}");
+    await ApiClient.post(
+      endpoint: ApiConst.logout,
+      data: {"refreshToken": refreshToken},
+    );
+    await SecureStorageHelper.deleteAll();
   }
 }

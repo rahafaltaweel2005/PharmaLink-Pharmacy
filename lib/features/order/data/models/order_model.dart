@@ -8,6 +8,7 @@ class OrderModel {
   String? orderName;
   String? notes;
   String? orderDate;
+  String? supplierName;
   String? deliveryTime;
   int? status;
   double? totalPrice;
@@ -22,6 +23,7 @@ class OrderModel {
     this.status,
     this.totalPrice,
     this.supplierId,
+    this.supplierName,
     this.orderItems,
   });
 
@@ -31,6 +33,7 @@ class OrderModel {
     orderDate = json['orderDate'];
     deliveryTime = json['deliveryTime'];
     status = json['status'];
+    supplierName = json['supplierName'];
     totalPrice = json['totalPrice'];
     supplierId = json['supplierId'];
     if (json['orderItems'] != null) {
@@ -48,6 +51,7 @@ class OrderModel {
     data['orderDate'] = this.orderDate;
     data['deliveryTime'] = this.deliveryTime;
     data['status'] = this.status;
+    data['supplierName'] = this.supplierName;
     data['totalPrice'] = this.totalPrice;
     data['supplierId'] = this.supplierId;
     if (this.orderItems != null) {
@@ -63,6 +67,7 @@ class OrderModel {
       notes: notes,
       deliveryTime: deliveryTime != null ? DateTime.parse(deliveryTime!) : null,
       supplierId: supplierId!,
+      supplierName: supplierName!,
       totalPrice: totalPrice!,
       status: _status(status!),
       orderItems: orderItems!.map((item) => item.toEntity()).toList(),

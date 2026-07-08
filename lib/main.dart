@@ -8,10 +8,13 @@ import 'core/app_setting/theme/app_theme.dart';
 import 'core/network/api_client.dart';
 import 'features/auth/data/datasource/auth_remote_datasource_impl.dart';
 import 'features/auth/data/repository/auth_repository_impl.dart';
+import 'features/auth/domain/usecase/get_profile_use_case.dart';
 import 'features/auth/domain/usecase/login_use_case.dart';
+import 'features/auth/domain/usecase/logout_use_case.dart';
 import 'features/auth/domain/usecase/register_use_case.dart';
 import 'features/auth/presentation/login/cubit/login_cubit.dart';
-import 'features/auth/presentation/login/view/login_screen.dart';
+import 'features/auth/presentation/logout/cubit/logout_cubit.dart';
+import 'features/auth/presentation/profile/cubit/profile_cubit.dart';
 import 'features/auth/presentation/register/cubit/register_cubit.dart';
 import 'features/inventory/data/datasource/inventory_remote_datasource_impl.dart';
 import 'features/inventory/data/repository/inventory_repository_impl.dart';
@@ -19,7 +22,6 @@ import 'features/inventory/domain/usecase/get_pharmacy_inventory_use_case.dart';
 import 'features/inventory/presentation/getPharmacyInventory/cubit/get_pharmacy_inventory_cubit.dart';
 import 'features/medicine/domain/usecase/get_medicine_by_id_use_case.dart';
 import 'features/medicine/domain/usecase/get_medicines_use_case.dart';
-import 'features/medicine/presentation/getMedicine/view/get_medicines_screen.dart';
 import 'features/medicine/presentation/getMedicineById/cubit/get_medicine_by_id_cubit.dart';
 import 'features/order/data/datasource/order_remote_datasource_impl.dart';
 import 'features/order/data/repository/order_repository_impl.dart';
@@ -29,9 +31,7 @@ import 'features/order/domain/usecase/get_order_by_id_use_case.dart';
 import 'features/order/domain/usecase/get_orders_use_case.dart';
 import 'features/order/presentation/cancelOrder/cubit/cancel_order_cubit.dart';
 import 'features/order/presentation/createOrder/cubit/create_order_cubit.dart';
-import 'features/order/presentation/createOrder/view/create_order_screen.dart';
 import 'features/order/presentation/getMyOrder/cubit/get_my_order_cubit.dart';
-import 'features/order/presentation/getMyOrder/view/get_my_order_screen.dart';
 import 'features/order/presentation/getOrderById/cubit/get_order_by_id_cubit.dart';
 import 'features/splash/presentation/view/splash_screen.dart';
 
@@ -58,7 +58,10 @@ void main() {
     inventoryRemoteDatasource: inventoryRemoteDatasource,
   );
   final loginUsecase = LoginUseCase(authRepository: authRepository);
+  final logoutUsecase = LogoutUseCase(authRepository: authRepository);
   final registerUsecase = RegisterUseCase(authRepository: authRepository);
+  final profileUsecase = GetProfileUseCase(authRepository: authRepository);
+
   final getMedicinesUsecase = GetMedicinesUseCase(
     medicineRepository: medicineRepository,
   );
@@ -82,8 +85,12 @@ void main() {
     MultiBlocProvider(
       providers: [
         BlocProvider(create: (_) => LoginCubit(loginUseCase: loginUsecase)),
+        BlocProvider(create: (_) => LogoutCubit(logoutUseCase: logoutUsecase)),
         BlocProvider(
           create: (_) => RegisterCubit(registerUseCase: registerUsecase),
+        ),
+        BlocProvider(
+          create: (_) => ProfileCubit(getProfileUseCase: profileUsecase),
         ),
         BlocProvider(
           create: (_) =>
@@ -131,7 +138,7 @@ class MyApp extends StatelessWidget {
       theme: AppTheme.lightTheme,
       darkTheme: AppTheme.darkTheme,
       themeMode: ThemeMode.system,
-      home: LoginScreen(),
+      home: SplashScreen(),
     );
   }
 }

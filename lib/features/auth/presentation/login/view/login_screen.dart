@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:pharma_link/features/auth/presentation/register/view/register_screen.dart';
 
 import '../../../../../core/constant/color_const.dart';
-import '../../../../inventory/presentation/getPharmacyInventory/view/get_main_inventory_screen.dart';
-import '../../../../medicine/presentation/getMedicine/view/get_medicines_screen.dart';
+import '../../../../../core/constant/svg_const.dart';
+import '../../../../home/presentation/view/home_screen.dart';
 import '../cubit/login_cubit.dart';
 import '../state/login_state.dart';
 import '../widget/pharma_button.dart';
@@ -48,7 +49,6 @@ class _LoginScreenState extends State<LoginScreen> {
     }
 
     context.read<LoginCubit>().login(email: email, password: password);
-
   }
 
   @override
@@ -76,14 +76,10 @@ class _LoginScreenState extends State<LoginScreen> {
           );
         }
         if (state is LoginSuccessState) {
-
-            Navigator.pushReplacement(
-              context,
-              MaterialPageRoute(
-                builder: (_) => GetMedicinesScreen(),
-              ),
-            );
-
+          Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(builder: (context) => HomeScreen()),
+          );
         }
       },
       builder: (context, state) {
@@ -93,30 +89,23 @@ class _LoginScreenState extends State<LoginScreen> {
 
           body: SafeArea(
             child: SingleChildScrollView(
-              padding: const EdgeInsets.symmetric(
-                horizontal: 24,
-                vertical: 50,
-              ),
+              padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 50),
 
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
 
                 children: [
-
                   const SizedBox(height: 20),
 
                   Container(
                     width: 110,
                     height: 110,
-
+                    padding: EdgeInsets.all(10),
                     decoration: BoxDecoration(
                       color: Colors.white,
                       shape: BoxShape.circle,
 
-                      border: Border.all(
-                        color: ColorConst.border,
-                        width: 1,
-                      ),
+                      border: Border.all(color: ColorConst.border, width: 1),
 
                       boxShadow: [
                         BoxShadow(
@@ -127,11 +116,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       ],
                     ),
 
-                    child: const Icon(
-                      Icons.local_pharmacy_rounded,
-                      size: 52,
-                      color: ColorConst.primary,
-                    ),
+                    child: SvgPicture.asset(SvgConst.pharmaLinkLogo),
                   ),
 
                   const SizedBox(height: 34),
@@ -181,10 +166,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
                       borderRadius: BorderRadius.circular(36),
 
-                      border: Border.all(
-                        color: ColorConst.border,
-                        width: 1,
-                      ),
+                      border: Border.all(color: ColorConst.border, width: 1),
 
                       boxShadow: [
                         BoxShadow(
@@ -199,7 +181,6 @@ class _LoginScreenState extends State<LoginScreen> {
                       crossAxisAlignment: CrossAxisAlignment.start,
 
                       children: [
-
                         PharmaTextField(
                           controller: emailController,
                           title: 'Email Address',
@@ -224,26 +205,22 @@ class _LoginScreenState extends State<LoginScreen> {
 
                             child: isPasswordHidden
                                 ? const Icon(
-                              Icons.visibility_off_outlined,
-                              color: ColorConst.primary,
-                            )
+                                    Icons.visibility_off_outlined,
+                                    color: ColorConst.primary,
+                                  )
                                 : const Icon(
-                              Icons.visibility_outlined,
-                              color: ColorConst.primary,
-                            ),
+                                    Icons.visibility_outlined,
+                                    color: ColorConst.primary,
+                                  ),
                           ),
                         ),
 
                         const SizedBox(height: 28),
 
                         PharmaButton(
-                          onPressed:(){
-                            Navigator.pushReplacement(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => GetPharmacyInventoryScreen(),
-                              ),
-                            );
+                          onPressed: () {
+                            print("before login method");
+                            login();
                           },
                           text: "Sign In",
                           buttonIcon: Icons.arrow_forward_ios_rounded,
@@ -258,7 +235,6 @@ class _LoginScreenState extends State<LoginScreen> {
                     mainAxisAlignment: MainAxisAlignment.center,
 
                     children: [
-
                       const Text(
                         "Need an account?",
 

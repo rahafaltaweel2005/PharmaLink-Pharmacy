@@ -2,6 +2,8 @@ import 'package:pharma_link/features/auth/data/datasource/auth_remote_datasource
 import 'package:pharma_link/features/auth/domain/entity/auth_response_entity.dart';
 import 'package:pharma_link/features/auth/domain/repository/auth_repository.dart';
 
+import '../../domain/entity/profile_entity.dart';
+
 class AuthRepositoryImpl implements AuthRepository {
   final AuthRemoteDatasource authRemoteDatasource;
 
@@ -41,6 +43,11 @@ class AuthRepositoryImpl implements AuthRepository {
     return model.toEntity();
   }
 
+  @override
+  Future<ProfileEntity> profile() async{
+    final model= await authRemoteDatasource.profile();
+    return model.toEntity();
+  }
   @override
   Future<void> logout() async{
     await authRemoteDatasource.logout();
