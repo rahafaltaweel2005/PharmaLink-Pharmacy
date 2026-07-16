@@ -17,13 +17,13 @@ class CreateOrderScreen extends StatefulWidget {
 }
 
 class _CreateOrderScreenState extends State<CreateOrderScreen> {
-  final TextEditingController locationController = TextEditingController();
+  final TextEditingController noteController = TextEditingController();
 
   int selectedDeliveryOption = 0;
 
   @override
   void dispose() {
-    locationController.dispose();
+    noteController.dispose();
     super.dispose();
   }
 
@@ -309,10 +309,10 @@ class _CreateOrderScreenState extends State<CreateOrderScreen> {
                     ),
                   ),
                   PharmaTextField(
-                    controller: locationController,
-                    title: "Location",
-                    hint: "Enter your location here",
-                    prefixIcon: Icons.location_on_outlined,
+                    controller: noteController,
+                    title: "Note",
+                    hint: "Enter your Note here",
+                    prefixIcon: Icons.note_alt_outlined,
                   ),
                 ],
               ),
@@ -369,7 +369,7 @@ class _CreateOrderScreenState extends State<CreateOrderScreen> {
                   orderItems: cartItems
                       .map((item) => item.toOrderItemEntity())
                       .toList(),
-                  notes: locationController.text,
+                  notes: noteController.text,
                 );
               },
               child: Text(

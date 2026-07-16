@@ -7,8 +7,7 @@ class ApiConst {
   static const String logout = "/api/Auth/logout";
   static const String profile = "/api/Auth/profile";
 
-
-  static const String medicine = "/api/Medicine";
+  static const String medicine = "/api/Medicine/available";
   static String medicineById(int id) => "/api/Medicine/$id";
 
   static const String createOrder = "/api/Order";

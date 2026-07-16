@@ -146,7 +146,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
 
               Row(
                 children: List.generate(
-                  2,
+                  3,
 
                   (index) => Expanded(
                     child: Container(
@@ -184,7 +184,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           builder: (context) => const LoginScreen(),
                         ),
                       );
-
                     }
                   },
 
@@ -327,35 +326,178 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                   obscureText: false,
                                 ),
 
-
                                 const SizedBox(height: 35),
-                                currentPage ==2?
-                                PharmaButton(
-                                  text: "Next Step",
+                                currentPage == 2
+                                    ? PharmaButton(
+                                        text: "Next Step",
 
-                                  onPressed: () {
-                                    controller.nextPage(
-                                      duration: const Duration(
-                                        milliseconds: 350,
+                                        onPressed: () {
+                                          controller.nextPage(
+                                            duration: const Duration(
+                                              milliseconds: 350,
+                                            ),
+                                            curve: Curves.easeInOut,
+                                          );
+                                        },
+                                      )
+                                    : PharmaButton(
+                                        onPressed: () {
+                                          controller.nextPage(
+                                            duration: const Duration(
+                                              milliseconds: 350,
+                                            ),
+                                            curve: Curves.easeInOut,
+                                          );
+                                          context
+                                              .read<RegisterCubit>()
+                                              .register(
+                                                name: nameController.text
+                                                    .trim(),
+                                                email: emailController.text
+                                                    .trim(),
+                                                password:
+                                                    passwordController.text,
+                                                phoneNumber:
+                                                    phoneNumberController.text
+                                                        .trim(),
+                                                doctorName: doctorNameController
+                                                    .text
+                                                    .trim(),
+                                                location: locationController
+                                                    .text
+                                                    .trim(),
+                                                licenseNumber:
+                                                    licenseNumberController.text
+                                                        .trim(),
+                                              );
+                                        },
+                                        text: "Create Account",
+                                        buttonIcon:
+                                            Icons.arrow_forward_ios_rounded,
                                       ),
-                                      curve: Curves.easeInOut,
+                              ],
+                            ),
+                          ),
+                        ),
+                        SingleChildScrollView(
+                          child: _buildCard(
+                            child: Column(
+                              children: [
+                                const SizedBox(height: 28),
+
+                                Text(
+                                  "Account under review",
+                                  style: TextStyle(
+                                    fontSize: 29,
+                                    fontWeight: FontWeight.w700,
+                                    color: ColorConst.primary,
+                                    fontFamily: 'Newsreader',
+                                  ),
+                                ),
+
+                                const SizedBox(height: 10),
+                                Text(
+                                  "Our clinical verification team is \ncurrently reviewing your credentials \nto ensure the highest standards of \npharmacy safety.",
+                                  style: TextStyle(
+                                    fontSize: 20,
+                                    fontWeight: FontWeight.w500,
+                                    color: ColorConst.primary,
+                                    fontFamily: 'Newsreader',
+                                  ),
+                                ),
+                                Container(
+                                  width: double.infinity,
+                                  margin: EdgeInsets.all(5),
+                                  padding: EdgeInsets.all(20),
+                                  decoration: BoxDecoration(
+                                    color: Color(0x7BF1EAE1),
+                                    borderRadius: BorderRadius.circular(20),
+                                    border: Border.all(
+                                      color: Color(0xFFEADFD9),
+                                    ),
+                                  ),
+                                  child: Expanded(
+                                    child: Column(
+                                      children: [
+                                        Icon(
+                                          Icons.timer_outlined,
+                                          color: Color(0xFF705450),
+                                          size: 40,
+                                        ),
+                                        Text(
+                                          "Timeframe",
+                                          style: TextStyle(
+                                            fontSize: 20,
+                                            fontWeight: FontWeight.w700,
+                                            color: ColorConst.textDark,
+                                            fontFamily: 'Newsreader',
+                                          ),
+                                        ),
+                                        Text(
+                                          "24-48 Hours",
+                                          style: TextStyle(
+                                            fontSize: 16,
+                                            fontWeight: FontWeight.w500,
+                                            color: ColorConst.textDark,
+                                            fontFamily: 'Newsreader',
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                                Container(
+                                  width: double.infinity,
+                                  margin: EdgeInsets.all(5),
+                                  padding: EdgeInsets.all(20),
+                                  decoration: BoxDecoration(
+                                    color: Color(0x7BF1EAE1),
+                                    borderRadius: BorderRadius.circular(20),
+                                    border: Border.all(
+                                      color: Color(0xFFEADFD9),
+                                    ),
+                                  ),
+                                  child: Expanded(
+                                    child: Column(
+                                      children: [
+                                        Icon(
+                                          Icons.shield_outlined,
+                                          color: Color(0xFF705450),
+                                          size: 40,
+                                        ),
+                                        Text(
+                                          "Compliance",
+                                          style: TextStyle(
+                                            fontSize: 20,
+                                            fontWeight: FontWeight.w700,
+                                            color: ColorConst.textDark,
+                                            fontFamily: 'Newsreader',
+                                          ),
+                                        ),
+                                        Text(
+                                          "Level 3 Audit",
+                                          style: TextStyle(
+                                            fontSize: 16,
+                                            fontWeight: FontWeight.w500,
+                                            color: ColorConst.textDark,
+                                            fontFamily: 'Newsreader',
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                                const SizedBox(height: 35),
+                                PharmaButton(
+                                  onPressed: () {
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) => LoginScreen(),
+                                      ),
                                     );
                                   },
-                                )
-                               : PharmaButton(
-                                  onPressed: (){
-                                    context.read<RegisterCubit>().register(
-                                      name: nameController.text.trim(),
-                                      email: emailController.text.trim(),
-                                      password: passwordController.text,
-                                      phoneNumber: phoneNumberController.text.trim(),
-                                      doctorName: doctorNameController.text.trim(),
-                                      location: locationController.text.trim(),
-                                      licenseNumber: licenseNumberController.text.trim(),
-                                    );
-                                  },
-                                  text: "Create Account",
-                                  buttonIcon: Icons.arrow_forward_ios_rounded,
+                                  text: "Ok",
                                 ),
                               ],
                             ),
@@ -372,6 +514,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
       ),
     );
   }
+
   Widget _buildCard({required Widget child}) {
     return Container(
       width: double.infinity,
@@ -389,33 +532,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
         ],
       ),
       child: child,
-    );
-  }
-
-  Widget _infoCard({
-    required IconData icon,
-    required String title,
-    required String value,
-    bool fullWidth = false,
-  }) {
-    return Container(
-      width: fullWidth ? double.infinity : null,
-      padding: const EdgeInsets.symmetric(vertical: 22, horizontal: 16),
-      decoration: BoxDecoration(
-        border: Border.all(color: const Color(0xFFF0E5DF)),
-      ),
-      child: Column(
-        children: [
-          Icon(icon, color: const Color(0xFF7D5B56)),
-          const SizedBox(height: 10),
-          Text(
-            title,
-            style: const TextStyle(fontWeight: FontWeight.w600, fontSize: 16),
-          ),
-          const SizedBox(height: 6),
-          Text(value, style: const TextStyle(color: Color(0xFF6B615E))),
-        ],
-      ),
     );
   }
 }
