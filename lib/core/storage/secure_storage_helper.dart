@@ -23,11 +23,12 @@ class SecureStorageHelper {
   static Future<bool> containsKey({required String key}) async {
     return await _storage.containsKey(key: key);
   }
-  static Future<Map<String,String>> readAll() async {
+
+  static Future<Map<String, String>> readAll() async {
     return _storage.readAll();
   }
+
   static Future<void> deleteAll() async {
     await _storage.deleteAll();
   }
-
 }

@@ -16,4 +16,4 @@ class RegisterErrorState extends RegisterState {
   final String error;
 
   RegisterErrorState({required this.error});
-}
+  }

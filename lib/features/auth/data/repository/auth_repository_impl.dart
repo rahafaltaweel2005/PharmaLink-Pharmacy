@@ -44,12 +44,13 @@ class AuthRepositoryImpl implements AuthRepository {
   }
 
   @override
-  Future<ProfileEntity> profile() async{
-    final model= await authRemoteDatasource.profile();
+  Future<ProfileEntity> profile() async {
+    final model = await authRemoteDatasource.profile();
     return model.toEntity();
   }
+
   @override
-  Future<void> logout() async{
+  Future<void> logout() async {
     await authRemoteDatasource.logout();
   }
 }

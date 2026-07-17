@@ -55,7 +55,6 @@ class _LoginScreenState extends State<LoginScreen> {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final size = MediaQuery.of(context).size;
-    final isDarkMode = theme.brightness == Brightness.dark;
     return BlocConsumer<LoginCubit, LoginState>(
       listener: (context, state) {
         if (state is LoginErrorState) {
@@ -83,7 +82,6 @@ class _LoginScreenState extends State<LoginScreen> {
         }
       },
       builder: (context, state) {
-        final bool isLoading = state is LoginLoadingState;
         return Scaffold(
           backgroundColor: ColorConst.bgLight,
 
@@ -219,7 +217,6 @@ class _LoginScreenState extends State<LoginScreen> {
 
                         PharmaButton(
                           onPressed: () {
-                            print("before login method");
                             login();
                           },
                           text: "Sign In",

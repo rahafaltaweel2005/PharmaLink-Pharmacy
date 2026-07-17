@@ -24,9 +24,7 @@ class _CartScreenState extends State<CartScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-
-      ),
+      appBar: AppBar(),
       body: BlocBuilder<CartCubit, CartState>(
         builder: (context, state) {
           if (state is CartStateLoadingState) {
@@ -245,14 +243,14 @@ class _CartScreenState extends State<CartScreen> {
                       ),
 
                       onPressed: () {
-                        if(state.items.isNotEmpty){
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => CreateOrderScreen(),
-                          ),
-                        );}
-                        else{
+                        if (state.items.isNotEmpty) {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => CreateOrderScreen(),
+                            ),
+                          );
+                        } else {
                           showDialog(
                             context: context,
                             builder: (_) => AlertDialog(
@@ -263,7 +261,9 @@ class _CartScreenState extends State<CartScreen> {
                                   style: ElevatedButton.styleFrom(
                                     backgroundColor: ColorConst.primary,
                                     elevation: 0,
-                                    padding: const EdgeInsets.symmetric(vertical: 20),
+                                    padding: const EdgeInsets.symmetric(
+                                      vertical: 20,
+                                    ),
                                     shape: RoundedRectangleBorder(
                                       borderRadius: BorderRadius.circular(28),
                                     ),
@@ -282,7 +282,8 @@ class _CartScreenState extends State<CartScreen> {
                                 ),
                               ],
                             ),
-                          );                        }
+                          );
+                        }
                       },
 
                       child: Text(

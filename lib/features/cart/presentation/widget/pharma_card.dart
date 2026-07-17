@@ -12,8 +12,6 @@ class PharmaCard extends StatelessWidget {
 
   const PharmaCard({super.key, required this.item});
 
-
-
   @override
   Widget build(BuildContext context) {
     final imagePath = item.medicine.imageUrl;
@@ -75,7 +73,7 @@ class PharmaCard extends StatelessWidget {
                     width: 82,
                     height: 82,
                     fit: BoxFit.cover,
-                    errorBuilder: (_, __, ___) {
+                    errorBuilder: (_, _, _) {
                       return Container(
                         height: 82,
                         width: 82,
@@ -144,9 +142,12 @@ class PharmaCard extends StatelessWidget {
 
                       child: Row(
                         children: [
-                          IconButton(onPressed: (){
-                            context.read<CartCubit>().decrementQuantity(item);
-                          }, icon: Icon(Icons.remove)),
+                          IconButton(
+                            onPressed: () {
+                              context.read<CartCubit>().decrementQuantity(item);
+                            },
+                            icon: Icon(Icons.remove),
+                          ),
                           Text(
                             item.quantity.toString(),
                             style: const TextStyle(
@@ -155,9 +156,12 @@ class PharmaCard extends StatelessWidget {
                               color: ColorConst.primary,
                             ),
                           ),
-                          IconButton(onPressed: (){
-                            context.read<CartCubit>().incrementQuantity(item);
-                          }, icon: Icon(Icons.add)),
+                          IconButton(
+                            onPressed: () {
+                              context.read<CartCubit>().incrementQuantity(item);
+                            },
+                            icon: Icon(Icons.add),
+                          ),
                         ],
                       ),
                     ),

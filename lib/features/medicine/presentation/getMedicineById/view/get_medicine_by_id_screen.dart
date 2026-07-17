@@ -181,7 +181,6 @@ class _GetMedicineByIdScreenState extends State<GetMedicineByIdScreen> {
                       ),
 
                       onPressed: () {
-                        print("add to cart");
                         context.read<CartCubit>().addToCart(
                           CartItemEntity(medicine: state.medicine, quantity: 1),
                         );

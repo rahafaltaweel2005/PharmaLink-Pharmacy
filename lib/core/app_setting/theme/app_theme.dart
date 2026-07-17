@@ -24,9 +24,7 @@ class AppTheme {
       elevation: 0,
       centerTitle: true,
       scrolledUnderElevation: 2,
-      iconTheme: IconThemeData(
-        color: ColorConst.primary,
-      ),
+      iconTheme: IconThemeData(color: ColorConst.primary),
 
       titleTextStyle: TextStyle(
         fontFamily: 'Newsreader',
@@ -40,9 +38,7 @@ class AppTheme {
       color: Colors.white,
       elevation: 0,
 
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(28),
-      ),
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(28)),
     ),
 
     inputDecorationTheme: InputDecorationTheme(
@@ -59,10 +55,7 @@ class AppTheme {
         fontWeight: FontWeight.w500,
       ),
 
-      contentPadding: const EdgeInsets.symmetric(
-        horizontal: 24,
-        vertical: 18,
-      ),
+      contentPadding: const EdgeInsets.symmetric(horizontal: 24, vertical: 18),
 
       border: OutlineInputBorder(
         borderRadius: BorderRadius.circular(30),
@@ -72,37 +65,25 @@ class AppTheme {
       enabledBorder: OutlineInputBorder(
         borderRadius: BorderRadius.circular(30),
 
-        borderSide: const BorderSide(
-          color: ColorConst.border,
-          width: 1,
-        ),
+        borderSide: const BorderSide(color: ColorConst.border, width: 1),
       ),
 
       focusedBorder: OutlineInputBorder(
         borderRadius: BorderRadius.circular(30),
 
-        borderSide: const BorderSide(
-          color: ColorConst.primary,
-          width: 1.4,
-        ),
+        borderSide: const BorderSide(color: ColorConst.primary, width: 1.4),
       ),
 
       errorBorder: OutlineInputBorder(
         borderRadius: BorderRadius.circular(30),
 
-        borderSide: const BorderSide(
-          color: ColorConst.error,
-          width: 1.2,
-        ),
+        borderSide: const BorderSide(color: ColorConst.error, width: 1.2),
       ),
 
       focusedErrorBorder: OutlineInputBorder(
         borderRadius: BorderRadius.circular(30),
 
-        borderSide: const BorderSide(
-          color: ColorConst.error,
-          width: 1.4,
-        ),
+        borderSide: const BorderSide(color: ColorConst.error, width: 1.4),
       ),
     ),
 
@@ -111,10 +92,7 @@ class AppTheme {
         backgroundColor: ColorConst.primary,
         foregroundColor: Colors.white,
 
-        minimumSize: const Size(
-          double.infinity,
-          56,
-        ),
+        minimumSize: const Size(double.infinity, 56),
 
         elevation: 0,
 
@@ -124,9 +102,7 @@ class AppTheme {
           fontSize: 16,
         ),
 
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(30),
-        ),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
       ),
     ),
 
@@ -181,9 +157,7 @@ class AppTheme {
       elevation: 0,
       centerTitle: true,
 
-      iconTheme: IconThemeData(
-        color: ColorConst.secondary,
-      ),
+      iconTheme: IconThemeData(color: ColorConst.secondary),
 
       titleTextStyle: TextStyle(
         fontFamily: 'Newsreader',
@@ -197,14 +171,9 @@ class AppTheme {
       filled: true,
       fillColor: ColorConst.surfaceDark,
 
-      hintStyle: TextStyle(
-        color: Colors.white.withValues(alpha: 0.4),
-      ),
+      hintStyle: TextStyle(color: Colors.white.withValues(alpha: 0.4)),
 
-      contentPadding: const EdgeInsets.symmetric(
-        horizontal: 24,
-        vertical: 18,
-      ),
+      contentPadding: const EdgeInsets.symmetric(horizontal: 24, vertical: 18),
 
       border: OutlineInputBorder(
         borderRadius: BorderRadius.circular(30),
@@ -223,19 +192,13 @@ class AppTheme {
       focusedBorder: OutlineInputBorder(
         borderRadius: BorderRadius.circular(30),
 
-        borderSide: const BorderSide(
-          color: ColorConst.secondary,
-          width: 1.4,
-        ),
+        borderSide: const BorderSide(color: ColorConst.secondary, width: 1.4),
       ),
 
       errorBorder: OutlineInputBorder(
         borderRadius: BorderRadius.circular(30),
 
-        borderSide: const BorderSide(
-          color: ColorConst.error,
-          width: 1.2,
-        ),
+        borderSide: const BorderSide(color: ColorConst.error, width: 1.2),
       ),
     ),
 
@@ -244,10 +207,7 @@ class AppTheme {
         backgroundColor: ColorConst.secondary,
         foregroundColor: ColorConst.primary,
 
-        minimumSize: const Size(
-          double.infinity,
-          56,
-        ),
+        minimumSize: const Size(double.infinity, 56),
 
         elevation: 0,
 
@@ -257,9 +217,7 @@ class AppTheme {
           fontSize: 16,
         ),
 
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(30),
-        ),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
       ),
     ),
   );

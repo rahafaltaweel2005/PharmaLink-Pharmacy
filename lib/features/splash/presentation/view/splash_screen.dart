@@ -1,13 +1,9 @@
 import 'dart:async';
-
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter/material.dart';
-
 import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:pharma_link/core/constant/app_const.dart';
 import 'package:pharma_link/core/storage/secure_storage_helper.dart';
-import 'package:pharma_link/features/medicine/presentation/getMedicine/view/get_medicines_screen.dart';
-
 import '../../../../core/constant/color_const.dart';
 import '../../../../core/constant/svg_const.dart';
 import '../../../auth/presentation/login/view/login_screen.dart';
@@ -23,18 +19,18 @@ class SplashScreen extends StatefulWidget {
 class _SplashScreenState extends State<SplashScreen>
     with TickerProviderStateMixin {
   Future<void> checkLogin() async {
-    await Future.delayed(Duration(seconds: 4));
-    // final token = await SecureStorageHelper.read(key: AppConst.accessTokenKey);
-    // if (!mounted) return;
-    // if (token == null || token.isEmpty) {
+    await Future.delayed(const Duration(seconds: 4));
+    final token = await SecureStorageHelper.read(key: AppConst.accessTokenKey);
+    if (!mounted) return;
+    if (token == null || token.isEmpty) {
       Navigator.of(
         context,
       ).pushReplacement(MaterialPageRoute(builder: (context) => LoginScreen()));
-    // } else {
-    //   Navigator.of(context).pushReplacement(
-    //     MaterialPageRoute(builder: (context) => HomeScreen()),
-    //   );
-    // }
+    } else {
+      Navigator.of(
+        context,
+      ).pushReplacement(MaterialPageRoute(builder: (context) => HomeScreen()));
+    }
   }
 
   @override
@@ -83,9 +79,7 @@ class _SplashScreenState extends State<SplashScreen>
                     ],
                   ),
 
-                  child: SvgPicture.asset(
-                    SvgConst.pharmaLinkLogo,
-                  ),
+                  child: SvgPicture.asset(SvgConst.pharmaLinkLogo),
                 ),
 
                 const SizedBox(height: 34),

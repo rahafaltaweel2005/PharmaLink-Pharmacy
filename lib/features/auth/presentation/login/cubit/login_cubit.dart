@@ -13,7 +13,6 @@ class LoginCubit extends Cubit<LoginState> {
   LoginCubit({required this.loginUseCase}) : super(LoginInitialState());
 
   Future<void> login({required String email, required String password}) async {
-    print("in cubit 1");
     emit(LoginLoadingState());
     try {
       final result = await loginUseCase(email: email, password: password);
@@ -21,25 +20,35 @@ class LoginCubit extends Cubit<LoginState> {
         key: AppConst.accessTokenKey,
         value: result.accessToken,
       );
+
       /// check Secure storage (if save data)
       /// 1 - access token
-      String? savedAccessToken = await SecureStorageHelper.read(key: AppConst.accessTokenKey);
+      String? savedAccessToken = await SecureStorageHelper.read(
+        key: AppConst.accessTokenKey,
+      );
       log("savedAccessToken = $savedAccessToken");
+
       /// if  savedAccessToken != null mean access token saved
       /// 2 - refresh token
       await SecureStorageHelper.write(
         key: AppConst.refreshTokenKey,
         value: result.refreshToken,
       );
-      String? savedRefreshToken = await SecureStorageHelper.read(key: AppConst.refreshTokenKey);
+      String? savedRefreshToken = await SecureStorageHelper.read(
+        key: AppConst.refreshTokenKey,
+      );
       log("savedRefreshToken = $savedRefreshToken");
+
       /// 3 - user role
       await SecureStorageHelper.write(
         key: AppConst.roleKey,
         value: result.role.name,
       );
-      String? savedUserRole = await SecureStorageHelper.read(key: AppConst.roleKey);
+      String? savedUserRole = await SecureStorageHelper.read(
+        key: AppConst.roleKey,
+      );
       log("savedUserRole = $savedUserRole");
+
       /// then emit for success state
       emit(LoginSuccessState(loginResponse: result));
     } catch (error) {

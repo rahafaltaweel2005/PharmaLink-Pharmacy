@@ -8,9 +8,11 @@ class ApiConst {
   static const String profile = "/api/Auth/profile";
 
   static const String medicine = "/api/Medicine/available";
+
   static String medicineById(int id) => "/api/Medicine/$id";
 
   static const String createOrder = "/api/Order";
+
   static String order(int id) => "/api/Order/$id";
   static const String pharmacyOrder = "/api/Order/pharmacy-orders";
 

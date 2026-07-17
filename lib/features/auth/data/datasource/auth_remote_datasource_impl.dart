@@ -1,4 +1,3 @@
-
 import '../../../../core/constant/api_const.dart';
 import '../../../../core/constant/app_const.dart';
 import '../../../../core/network/api_client.dart';
@@ -56,7 +55,6 @@ class AuthRemoteDatasourceImpl extends AuthRemoteDatasource {
     final refreshToken = await SecureStorageHelper.read(
       key: AppConst.refreshTokenKey,
     );
-    print("refreshToken logout ${refreshToken}");
     await ApiClient.post(
       endpoint: ApiConst.logout,
       data: {"refreshToken": refreshToken},

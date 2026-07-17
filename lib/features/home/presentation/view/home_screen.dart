@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:pharma_link/core/constant/svg_const.dart';
-
 import '../../../../core/constant/color_const.dart';
 import '../../../auth/presentation/profile/view/profile_screen.dart';
 import '../../../cart/presentation/view/cart_screen.dart';
@@ -66,7 +65,8 @@ class _HomeScreenState extends State<HomeScreen> {
           BottomNavigationBarItem(
             icon: Icon(Icons.inventory_2_outlined),
             label: 'inventory',
-          ), BottomNavigationBarItem(
+          ),
+          BottomNavigationBarItem(
             icon: Icon(Icons.local_shipping_outlined),
             label: 'order',
           ),
