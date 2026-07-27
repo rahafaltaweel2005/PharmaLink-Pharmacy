@@ -178,12 +178,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     }
 
                     if (state is RegisterSuccessState) {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => const LoginScreen(),
-                        ),
-                      );
                     }
                   },
 
@@ -416,34 +410,32 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                       color: Color(0xFFEADFD9),
                                     ),
                                   ),
-                                  child: Expanded(
-                                    child: Column(
-                                      children: [
-                                        Icon(
-                                          Icons.timer_outlined,
-                                          color: Color(0xFF705450),
-                                          size: 40,
+                                  child: Column(
+                                    children: [
+                                      Icon(
+                                        Icons.timer_outlined,
+                                        color: Color(0xFF705450),
+                                        size: 40,
+                                      ),
+                                      Text(
+                                        "Timeframe",
+                                        style: TextStyle(
+                                          fontSize: 20,
+                                          fontWeight: FontWeight.w700,
+                                          color: ColorConst.textDark,
+                                          fontFamily: 'Newsreader',
                                         ),
-                                        Text(
-                                          "Timeframe",
-                                          style: TextStyle(
-                                            fontSize: 20,
-                                            fontWeight: FontWeight.w700,
-                                            color: ColorConst.textDark,
-                                            fontFamily: 'Newsreader',
-                                          ),
+                                      ),
+                                      Text(
+                                        "24-48 Hours",
+                                        style: TextStyle(
+                                          fontSize: 16,
+                                          fontWeight: FontWeight.w500,
+                                          color: ColorConst.textDark,
+                                          fontFamily: 'Newsreader',
                                         ),
-                                        Text(
-                                          "24-48 Hours",
-                                          style: TextStyle(
-                                            fontSize: 16,
-                                            fontWeight: FontWeight.w500,
-                                            color: ColorConst.textDark,
-                                            fontFamily: 'Newsreader',
-                                          ),
-                                        ),
-                                      ],
-                                    ),
+                                      ),
+                                    ],
                                   ),
                                 ),
                                 Container(
@@ -457,34 +449,32 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                       color: Color(0xFFEADFD9),
                                     ),
                                   ),
-                                  child: Expanded(
-                                    child: Column(
-                                      children: [
-                                        Icon(
-                                          Icons.shield_outlined,
-                                          color: Color(0xFF705450),
-                                          size: 40,
+                                  child: Column(
+                                    children: [
+                                      Icon(
+                                        Icons.shield_outlined,
+                                        color: Color(0xFF705450),
+                                        size: 40,
+                                      ),
+                                      Text(
+                                        "Compliance",
+                                        style: TextStyle(
+                                          fontSize: 20,
+                                          fontWeight: FontWeight.w700,
+                                          color: ColorConst.textDark,
+                                          fontFamily: 'Newsreader',
                                         ),
-                                        Text(
-                                          "Compliance",
-                                          style: TextStyle(
-                                            fontSize: 20,
-                                            fontWeight: FontWeight.w700,
-                                            color: ColorConst.textDark,
-                                            fontFamily: 'Newsreader',
-                                          ),
+                                      ),
+                                      Text(
+                                        "Level 3 Audit",
+                                        style: TextStyle(
+                                          fontSize: 16,
+                                          fontWeight: FontWeight.w500,
+                                          color: ColorConst.textDark,
+                                          fontFamily: 'Newsreader',
                                         ),
-                                        Text(
-                                          "Level 3 Audit",
-                                          style: TextStyle(
-                                            fontSize: 16,
-                                            fontWeight: FontWeight.w500,
-                                            color: ColorConst.textDark,
-                                            fontFamily: 'Newsreader',
-                                          ),
-                                        ),
-                                      ],
-                                    ),
+                                      ),
+                                    ],
                                   ),
                                 ),
                                 const SizedBox(height: 35),
